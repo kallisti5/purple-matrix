@@ -22,7 +22,7 @@ OBJECTS = libmatrix.o matrix-api.o matrix-connection.o \
     matrix-statetable.o \
     matrix-sync.o
 
-all: $(TARGET)
+all: http-parser $(TARGET)
 clean:
 	rm -f $(OBJECTS) $(OBJECTS:.o=.d) $(TARGET)
 
@@ -33,6 +33,9 @@ install:
 	    mkdir -p $(DESTDIR)$(DATA_ROOT_DIR_PURPLE)/pixmaps/pidgin/protocols/$$i; \
 	    install -m 664 matrix-$${i}px.png $(DESTDIR)$(DATA_ROOT_DIR_PURPLE)/pixmaps/pidgin/protocols/$$i/matrix.png; \
 	done
+
+http-parser:
+	make -C vendor/http-parser
 
 $(TARGET): $(OBJECTS)
 	$(LINK.o) -shared $^ $(LOADLIBES) $(LDLIBS) -o $@
